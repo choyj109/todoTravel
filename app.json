@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "todoTravel",
-    "slug": "todoTravel",
+    "slug": "todotravel",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e545443d-7189-43b4-b594-452ae141d266"
+      }
+    },
+    "owner": "joyoonjoo"
   }
 }
