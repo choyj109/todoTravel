@@ -109,15 +109,28 @@ export default function App() {
     }
     return;
   };
-  const updateTodo = async (key) => {
-    if (text === "") {
-      return;
+  const resetTodo = async (key) => {
+    if (Platform.OS === "web") {
+      const ok = confirm("전부 삭제하겠습니까?");
+      if (ok) {
+        const newTodos = {};
+        setTodos(newTodos);
+        await saveTodos(newTodos);
+      }
+    } else {
+      Alert.alert("전부 삭제합니다", "확실합니까?", [
+        { text: "취소" },
+        {
+          text: "삭제",
+          onPress: async () => {
+            const newTodos = {};
+            setTodos(newTodos);
+            await saveTodos(newTodos);
+          },
+        },
+      ]);
     }
-    const newTodos = { ...todos };
-    newTodos[key].text = edit;
-    setTodos(newTodos);
-    await saveTodos(newTodos);
-    setIsEdit(null);
+    return;
   };
   const changeInput = async (key) => {
     const newTodos = { ...todos };
@@ -129,6 +142,16 @@ export default function App() {
     setIsEdit((e) => {
       return e === key ? null : key;
     });
+  };
+  const updateTodo = async (key) => {
+    if (text === "") {
+      return;
+    }
+    const newTodos = { ...todos };
+    newTodos[key].text = edit;
+    setTodos(newTodos);
+    await saveTodos(newTodos);
+    setIsEdit(null);
   };
   const completeTodo = async (key) => {
     const newTodos = { ...todos };
@@ -251,6 +274,16 @@ export default function App() {
           ) : null
         )}
       </ScrollView>
+      <TouchableOpacity onPress={resetTodo} style={styles.lightBtn}>
+        {completed ? (
+          <Feather name="moon" size={20} color="white" />
+        ) : (
+          <Feather name="sun" size={20} color="white" />
+        )}
+      </TouchableOpacity>
+      <TouchableOpacity onPress={resetTodo} style={styles.resetBtn}>
+        <Feather name="rotate-cw" size={20} color="white" />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -260,6 +293,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.bg,
     paddingHorizontal: 20,
+    position: "relative",
   },
   header: {
     justifyContent: "space-between",
@@ -302,5 +336,16 @@ const styles = StyleSheet.create({
   },
   editBtn: {
     marginRight: 15,
+  },
+  resetBtn: {
+    borderRadius: 20,
+    backgroundColor: theme.green,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 11,
+    position: "fixed",
+    screenLeft: 20,
+    top: 50,
   },
 });
