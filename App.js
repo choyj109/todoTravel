@@ -274,13 +274,6 @@ export default function App() {
           ) : null
         )}
       </ScrollView>
-      <TouchableOpacity onPress={resetTodo} style={styles.lightBtn}>
-        {completed ? (
-          <Feather name="moon" size={20} color="white" />
-        ) : (
-          <Feather name="sun" size={20} color="white" />
-        )}
-      </TouchableOpacity>
       <TouchableOpacity onPress={resetTodo} style={styles.resetBtn}>
         <Feather name="rotate-cw" size={20} color="white" />
       </TouchableOpacity>
@@ -338,14 +331,14 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   resetBtn: {
-    borderRadius: 20,
-    backgroundColor: theme.green,
+    borderRadius: 10,
+    backgroundColor: theme.todoBg,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 10,
-    paddingHorizontal: 11,
-    position: "fixed",
-    screenLeft: 20,
+    paddingHorizontal: 10,
+    position: "absolute",
+    left: 20,
     top: 50,
   },
 });
